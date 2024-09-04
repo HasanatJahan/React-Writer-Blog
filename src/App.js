@@ -1,19 +1,38 @@
 import Navbar from "./Navbar";
 import Home from "./Home";
+import Create from "./Create";
+import BlogDetails from "./BlogDetails";
+import NotFound from "./NotFound";
+import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 
 function App() {
-  // const title = "Welcome to the new blog";
-  //  react converts this to a string before it outputs it 
-  //  the only thing it cant directly output is objects 
-  // const likes = 500;
-  // const link = "http://www.google.com"
   return (
-    <div className="App">
-      <Navbar />
-      <div className="content">
-        <Home />
+    <Router>
+      <div className="App">
+        <Navbar />
+        <div className="content">
+          <Switch>
+            <Route exact path="/">
+              <Home />
+            </Route>
+
+            <Route exact path="/create">
+              <Create />
+            </Route>
+
+            <Route path="/blogs/:id">
+              <BlogDetails />
+            </Route>
+
+            {/* Catch all route for unknown page */}
+            {/* Has to be at the bottom because it is not a match before */}
+            <Route path="*">
+              <NotFound />
+            </Route>
+          </Switch>
+        </div>
       </div>
-    </div>
+    </Router >
   );
 }
 
