@@ -79,7 +79,7 @@ Start the JSON server with the provided db.json file:
 ```
     bash
 
-    json-server --watch data/db.json --port 3000
+    npx json-server --watch data/db.json --port 3000
 ```
 
 4. Start the React App
