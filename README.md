@@ -79,7 +79,7 @@ Start the JSON server with the provided db.json file:
 ```
     bash
 
-    json-server --watch data/db.json --port 3000
+    npx json-server --watch data/db.json --port 3000
 ```
 
 4. Start the React App
@@ -91,11 +91,15 @@ bash
 npm start
 
 The React app will run on http://localhost:3001 and will communicate with the JSON Server on http://localhost:3000.
+
 5. Access the App
 
     Home Page: Lists all the available blog posts (/)
+   
     Create Page: Form to create a new blog post (/create)
+   
     Blog Details Page: View the details of a selected blog (/blogs/:id)
+   
     404 Page: Displays a custom 404 error message for any invalid routes.
 
 Example JSON Data
