@@ -9,15 +9,24 @@ const useFetch = (url) => {
         // associate with specific fetch request 
         const abortCont = new AbortController();
 
-        setTimeout(() => { // added this for ispending simulation
+        const fetchData = setTimeout(() => { // added this for ispending simulation
             fetch(url, { signal: abortCont.signal })
                 .then(res => {
+                    console.log(res);
                     if (!res.ok) {
                         setError(res.err);
                         setIsPending(false);
                         throw Error("Could not fetch the data from the resource");
                     }
-                    return res.json();
+
+                    //  check if the content type is JSON
+                    const contentType = res.headers.get("content-type");
+                    if (contentType && contentType.includes("application/json")) {
+                        return res.json();
+                    }
+                    else {
+                        throw new Error("Receieved non-JSON data");
+                    }
                 })
                 .then(data => {
                     console.log(data);
@@ -38,8 +47,10 @@ const useFetch = (url) => {
         }, 500)
 
         //  return here for cleanup 
-        return () => abortCont.abort();
-
+        return () => {
+            abortCont.abort(); // Cleanup to abort fetch if component unmounts
+            clearTimeout(fetchData); // Clear the timeout if component unmounts
+        }
     }, [url]);
 
     // return value from the custom hook 
